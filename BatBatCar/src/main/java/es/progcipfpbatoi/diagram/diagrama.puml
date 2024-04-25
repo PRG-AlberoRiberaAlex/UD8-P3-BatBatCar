@@ -1,0 +1,92 @@
+@startuml
+
+skinparam package {
+    BorderColor lightgrey
+}
+
+package controller {
+    class ViajesController {
+        - Usuario usuario
+        - ViajesManager viajesManager
+        --
+        + ViajesController()
+        + listarViajes()
+        + anyadirViaje()
+    }
+}
+
+package model.managers {
+    class ViajesManager {
+        - List<Viaje> viajes
+        --
+        + ViajesManager()
+        + add(viaje: Viaje)
+        + cancel(viaje: Viaje)
+        + getNumViajes(): int
+        + findAll(): List<Viaje>
+        - init()
+    }
+}
+
+package model.entidades {
+    class Viaje {
+    }
+}
+
+package model.entidades {
+    class Usuario {
+    }
+}
+
+package views {
+class GestorIO {
+        - static Scanner scanner
+        --
+        + getInt(mensaje: String): int
+        + getInt(mensaje: String, min: int, max: int): int
+        + getFloat(mensaje: String): float
+        + getString(mensaje: String): String
+        + confirmar(mensaje: String): boolean
+        + print(mensaje: String)
+    }
+
+    class ListadoViajesView {
+        - List<Viaje> viajes
+        - static final int ANCHO_TABLA = 100
+        --
+        + ListadoViajesView(viajes: List<Viaje>)
+        + buildASCIITable(): AsciiTable
+        + toString(): String
+        - generarFilasViajes(tabla: AsciiTable)
+    }
+}
+
+package menu {
+    class Menu {
+        - static final int OPCION_SALIR = 9
+        - ViajesController viajesController
+        --
+        + Menu()
+        + iniciar()
+        - mostrarOpciones()
+        - solicitarOpcion(): int
+        - ejecutarOpcion(opcionSeleccionada: int)
+    }
+}
+
+
+    class BatBatCar {
+        + main(args: String[]): void
+    }
+
+BatBatCar --* Menu
+ViajesController --* ViajesManager
+ViajesController --* ListadoViajesView
+
+ViajesController --o Usuario
+ListadoViajesView --o Viaje
+ViajesManager --* Viaje
+Menu --* ViajesController
+
+@enduml
+
