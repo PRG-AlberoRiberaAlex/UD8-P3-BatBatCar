@@ -14,11 +14,7 @@ public class ViajesController {
 
     public ViajesController() {
         this.viajesManager = new ViajesManager();
-        
-        /* Por defecto, no hay establecido ningún usuario. Se deberá establecer a posteriori
-         Si no quieres realizar el caso de uso 1 hasta el final puedes establecer un usuario
-         por defecto. Por ejemplo: this.usuario = new Usuario("roberto1979", "12345"); */
-        this.usuario = null;
+        this.usuario = new Usuario("Alex","1234");
     }
     
     /**
@@ -33,7 +29,7 @@ public class ViajesController {
      * Añade un viaje al sistema, preguntando previamente por toda la información necesaria para crearlo.
      */
     public void anyadirViaje() {
-        this.viajesManager.add(new Viaje());
+        //this.viajesManager.add(new Viaje());
         GestorIO.print("Viaje añadido con éxito");
     }
 }

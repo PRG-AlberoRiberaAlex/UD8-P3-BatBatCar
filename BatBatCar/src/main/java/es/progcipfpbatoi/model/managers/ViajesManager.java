@@ -22,10 +22,10 @@ public class ViajesManager {
 
     /**
      * Añade un nuevo viaje al repositorio
-     * @param viaje
+     * @param
      */
     public void add(Viaje viaje) {
-        throw new UnsupportedOperationException("Por implementar");
+        viajes.add(viaje);
     }
     
     /**
