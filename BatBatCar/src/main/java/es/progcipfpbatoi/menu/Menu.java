@@ -1,10 +1,8 @@
 package es.progcipfpbatoi.menu;
 
 import es.progcipfpbatoi.controller.ViajesController;
-import es.progcipfpbatoi.model.entities.Usuario;
 import es.progcipfpbatoi.model.entities.types.Reserva;
 import es.progcipfpbatoi.model.entities.types.Viaje;
-import es.progcipfpbatoi.model.managers.Sistema;
 import es.progcipfpbatoi.model.managers.ViajesManager;
 import es.progcipfpbatoi.views.GestorIO;
 
@@ -19,26 +17,26 @@ public class Menu {
     private static final int OPCION_SALIR = 9;
     
     private ViajesController viajesController;
-    private Sistema sistema;
     private ViajesManager viajesManager;
     private Viaje viaje;
     private Reserva reserva;
 
+
     public Menu() {
         this.viajesController = new ViajesController();
-        this.sistema = new Sistema();
         this.viajesManager = new ViajesManager();
     }
 
     public void iniciar(){
-
         GestorIO.print("BatBatCar");
         GestorIO.print("=========");
-        
-        mostrarOpciones();
-        int opcionSeleccionada = solicitarOpcion();
-        ejecutarOpcion(opcionSeleccionada);
-        
+
+        int opcionSeleccionada;
+        do {
+            mostrarOpciones();
+            opcionSeleccionada = solicitarOpcion();
+            ejecutarOpcion(opcionSeleccionada);
+        } while (opcionSeleccionada != 9);
     }
 
     private void mostrarOpciones() {
@@ -55,21 +53,21 @@ public class Menu {
     }
     
     private int solicitarOpcion() {
-        // Implementar método para solicitar la opción al usuario
-        GestorIO.print("Introduce la opción:");
-        return 2;
+        return GestorIO.getInt("Introduce la opción:",1,9);
+
     }
     
     private void ejecutarOpcion(int opcionSeleccionada) {
         
         // Implementar método para ejecutar la opción recibida
         switch (opcionSeleccionada) {
-            case 1 -> sistema.registrarUsuari();
+            case 1 -> viajesController.registrarUsuario();
             case 2 -> viajesController.listarViajes();
             case 3 -> viajesManager.add(viaje);
             case 4 ->viaje.getCancelado();
             case 5 ->reserva.getCodiReserva();
-            default -> throw new UnsupportedOperationException("Por implementar");
+            case 9 ->GestorIO.print("Saliendo del programa...");
+            default -> GestorIO.getInt("");
         }
     }
 
