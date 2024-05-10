@@ -5,9 +5,13 @@ package es.progcipfpbatoi.views;
  * ruta, precio, propietario, tipo de viaje, plazas disponibles y si está
  * cancelado.
  */
+
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
+import es.progcipfpbatoi.model.entities.Usuario;
 import es.progcipfpbatoi.model.entities.types.Viaje;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListadoViajesView {
@@ -19,6 +23,7 @@ public class ListadoViajesView {
     public ListadoViajesView(List<Viaje> viajes) {
         this.viajes = viajes;
     }
+
 
     private AsciiTable buildASCIITable() {
 
@@ -45,12 +50,28 @@ public class ListadoViajesView {
     }
 
     private void generarFilasViajes(AsciiTable tabla) {
-
-        // Implementa este método usando un bucle que itere sobre la lista de viajes y mostrando uno por fila.
-        tabla.addRow(1, null, "Barcelona-Alicante", 45, "roberto1979", "Estándar", 3, "No");
-        tabla.addRule();
-        tabla.addRow(2, null, "Alcoy-Elche", 10, "sergio123", "Estándar", 5, "Sí");
-        tabla.addRule();
+        for (Viaje viaje : viajes) {
+            tabla.addRow(
+                    viaje.getCodigoDeViaje(),
+                    null,
+                    viaje.getRuta(),
+                    viaje.getPrecio(),
+                    viaje.getPropietario().getNomUsuario(),
+                    viaje.tipodeavion(),
+                    viaje.getPlazas_reservables() - viaje.getPlazas_reservadas(), // Plazas disponibles
+                    viaje.getCancelado() ? "Sí" : "No" // Si está cancelado o no
+            );
+            tabla.addRule();
+        }
     }
-
+    private List<Viaje> generarListaViajesCancelable(Usuario usuarioActivo) {
+        List<Viaje> viajesCancelable = new ArrayList<>();
+        for (Viaje viaje : viajes) {
+            // Verificar si el viaje pertenece al usuario de la sesión y no está cancelado
+            if (viaje.getPropietario().equals(usuarioActivo) && !viaje.getCancelado()) {
+                viajesCancelable.add(viaje);
+            }
+        }
+        return viajesCancelable;
+    }
 }

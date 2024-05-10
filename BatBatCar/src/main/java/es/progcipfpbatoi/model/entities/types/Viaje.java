@@ -20,19 +20,19 @@ public class Viaje {
     private boolean Cancelado;
     protected ArrayList<Reserva> reservas;
 
-    public Viaje(int codigoDeViaje, Usuario propietario, String ruta, int min, int plazasReservables, int precio, boolean cerrado, boolean cancelado, ArrayList<Reserva> reservas) {
+    public Viaje(int codigoDeViaje, Usuario propietario, String ruta, int min, int plazasReservables, int precio) {
         CodigoDeViaje = codigoDeViaje;
         Propietario = propietario;
         Ruta = ruta;
         Min = min;
         Plazas_reservables = plazasReservables ;
         Precio = precio;
-        Cerrado = cerrado;
-        Cancelado = cancelado;
-        this.reservas = reservas;
+    }
+    public String tipodeavion(){
+        return "Estandar";
     }
 
-    public double precioTotal() {
+    public double getprecioTotal() {
         return Precio * Plazas_reservadas;
     }
 
@@ -89,6 +89,7 @@ public class Viaje {
         return true;
     }
 
+
     public boolean compararCodigo() {
         for (Reserva reserva : reservas) {
             if (reserva.getCodiReserva().equals(String.valueOf(CodigoDeViaje))) {
@@ -106,8 +107,14 @@ public class Viaje {
         }
     }
     public void cerrarViaje() {
-
+        if (!Cerrado && Plazas_reservadas == Plazas_reservables) {
+            Cerrado = true;
+            System.out.println("Viaje cerrado correctamente. No se permiten más reservas.");
+        } else {
+            System.out.println("No se puede cerrar el viaje. Asegúrate de que todas las plazas estén reservadas.");
+        }
     }
+
 
 
     public Usuario getPropietario() {
@@ -132,6 +139,20 @@ public class Viaje {
 
     public int getPlazas_reservables() {
         return Plazas_reservables;
+    }
+
+    @Override
+    public String toString() {
+        return "Viaje de tipo " + tipodeavion() + " del propietario " + getPropietario().getNomUsuario() + " con codigo " + getCodigoDeViaje() + " y ruta " + getRuta() + " con " + getPlazas_reservables() + " plazas ofertadas añadido con éxito";
+    }
+
+
+    public void setUsuario(Usuario usuario) {
+        this.Propietario=usuario;
+    }
+
+    public int getPrecio() {
+        return Precio;
     }
 }
 

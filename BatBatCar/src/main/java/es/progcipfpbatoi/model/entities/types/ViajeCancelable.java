@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ViajeCancelable extends Viaje {
-    public ViajeCancelable(int codigoDeViaje, Usuario propietario, String ruta, int min, int plazasOfertables, int precio, boolean cerrado, boolean cancelado, ArrayList<Reserva> reservas) {
-        super(codigoDeViaje, propietario, ruta, min, plazasOfertables, precio, cerrado, cancelado,reservas);
+    public ViajeCancelable(int codigoDeViaje, Usuario propietario, String ruta, int min, int plazasOfertables, int precio) {
+        super(codigoDeViaje, propietario, ruta, min, plazasOfertables, precio);
     }
 
     public void cancelarReserva(String codigoReserva) {
@@ -28,4 +28,13 @@ public class ViajeCancelable extends Viaje {
         GestorIO.print("No se encontró ninguna reserva con el código proporcionado.");
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public String tipodeavion() {
+        return "Cancelable";
+    }
 }
