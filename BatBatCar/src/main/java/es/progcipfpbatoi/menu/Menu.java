@@ -64,7 +64,7 @@ public class Menu {
             case 2 -> viajesController.listarViajes();
             case 3 -> viajesController.añadirViaje();
             case 4 -> viajesController.cancelarViaje();
-            case 5 -> reserva.getCodiReserva();
+            case 5 -> viajesController.realizarReserva();
             case 8 ->GestorIO.getInt("a");
             case 9 -> GestorIO.print("Saliendo del programa...");
             default -> GestorIO.getInt("");

@@ -1,10 +1,7 @@
 package es.progcipfpbatoi.controller;
 
 import es.progcipfpbatoi.model.entities.Usuario;
-import es.progcipfpbatoi.model.entities.types.Viaje;
-import es.progcipfpbatoi.model.entities.types.ViajeCancelable;
-import es.progcipfpbatoi.model.entities.types.ViajeExclusivo;
-import es.progcipfpbatoi.model.entities.types.ViajeFlexible;
+import es.progcipfpbatoi.model.entities.types.*;
 import es.progcipfpbatoi.model.managers.ViajesManager;
 import es.progcipfpbatoi.views.GestorIO;
 import es.progcipfpbatoi.views.ListadoViajesView;
@@ -163,6 +160,55 @@ public class ViajesController {
             }
         } while (true);
     }
+    public void realizarReserva() {
+        if (usuarioActivo == null) {
+            GestorIO.print("Error: No se ha establecido un usuario. Por favor, inicia sesión.");
+            return;
+        }
+
+        //Obtener la lista de viajes reservables para el usuario activo
+        List<Viaje> viajesReservables = viajesManager.buscarViajesCancelablePorUsuario(usuarioActivo);
+
+        // Mostrar los viajes reservables al usuario
+        GestorIO.print("Listado de viajes reservables:");
+        for (Viaje viaje : viajesReservables) {
+            GestorIO.print(viaje.getCodigoDeViaje() + " - " + viaje.getRuta());
+        }
+
+        //Solicitar al usuario que seleccione un viaje
+        int codigoViajeSeleccionado = GestorIO.getInt("Introduce el código del viaje que deseas reservar:");
+
+        // Encontrar el viaje seleccionado por el usuario
+        Viaje viajeSeleccionado = null;
+        for (Viaje viaje : viajesReservables) {
+            if (viaje.getCodigoDeViaje() == codigoViajeSeleccionado) {
+                viajeSeleccionado = viaje;
+                break;
+            }
+        }
+
+        // Verificar si se encontró el viaje seleccionado
+        if (viajeSeleccionado == null) {
+            GestorIO.print("Error: El viaje seleccionado no está disponible para reservar.");
+            return;
+        }
+
+        // Pedir los datos necesarios para realizar la reserva
+        int numeroPlazas = GestorIO.getInt("Introduce el número de plazas que deseas reservar:");
+
+        //  Realizar la reserva
+        Reserva reserva = new Reserva(usuarioActivo, numeroPlazas);
+        viajeSeleccionado.añadirReserva(reserva);
+
+        // Mostrar información de la reserva
+        GestorIO.print("Reserva realizada con éxito:");
+        GestorIO.print("Viaje: " + viajeSeleccionado.getRuta());
+        GestorIO.print("Número de plazas reservadas: " + numeroPlazas);
+        GestorIO.print("Datos del usuario: " + usuarioActivo.toString());
+    }
+
+
+
 
 
     public Usuario getUsuario() {

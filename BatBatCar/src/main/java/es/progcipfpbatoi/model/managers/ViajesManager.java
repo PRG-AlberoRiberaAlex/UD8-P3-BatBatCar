@@ -2,6 +2,7 @@ package es.progcipfpbatoi.model.managers;
 
 import es.progcipfpbatoi.model.entities.Usuario;
 import es.progcipfpbatoi.model.entities.types.Viaje;
+import es.progcipfpbatoi.model.entities.types.ViajeExclusivo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +77,15 @@ public class ViajesManager {
 
         return viajesCancelable;
     }
-
+    public List<Viaje> buscarViajesReservables(Usuario usuario) {
+        List<Viaje> viajesReservables = new ArrayList<>();
+        for (Viaje viaje : viajes) {
+            // Verificar si el viaje no está cancelado, no pertenece al usuario y no es exclusivo
+            if (!viaje.getCancelado() && !viaje.getPropietario().equals(usuario) && !(viaje instanceof ViajeExclusivo)) {
+                viajesReservables.add(viaje);
+            }
+        }
+        return viajesReservables;
+    }
 
 }
