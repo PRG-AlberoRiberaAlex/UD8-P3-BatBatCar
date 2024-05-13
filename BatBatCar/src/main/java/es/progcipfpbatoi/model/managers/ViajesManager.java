@@ -66,26 +66,16 @@ public class ViajesManager {
         // this.add(new Viaje(....));
     }
 
-    public List<Viaje> buscarViajesCancelablePorUsuario(Usuario usuario) {
-         List<Viaje> viajesCancelable = new ArrayList<>();
-        for (Viaje viaje : viajes) {
-            // Verificar si el viaje no está cancelado y pertenece al usuario dado
-            if (!viaje.getCancelado() && viaje.getPropietario().equals(usuario) && viaje.tipodeavion()=="Cancelable" || !viaje.getCancelado() && viaje.getPropietario().equals(usuario) && viaje.tipodeavion()=="Flexible" ) {
-                viajesCancelable.add(viaje);
-            }
-        }
-
-        return viajesCancelable;
-    }
     public List<Viaje> buscarViajesReservables(Usuario usuario) {
         List<Viaje> viajesReservables = new ArrayList<>();
         for (Viaje viaje : viajes) {
-            // Verificar si el viaje no está cancelado, no pertenece al usuario y no es exclusivo
-            if (!viaje.getCancelado() && !viaje.getPropietario().equals(usuario) && !(viaje instanceof ViajeExclusivo)) {
+            // Verificar si el viaje no está cancelado y no pertenece al usuario
+            if (!viaje.getCancelado() && !viaje.getPropietario().equals(usuario)) {
                 viajesReservables.add(viaje);
             }
         }
         return viajesReservables;
     }
+
 
 }

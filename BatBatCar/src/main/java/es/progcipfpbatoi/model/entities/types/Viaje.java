@@ -27,6 +27,7 @@ public class Viaje {
         Min = min;
         Plazas_reservables = plazasReservables ;
         Precio = precio;
+        reservas= new ArrayList<>();
     }
     public String tipodeavion(){
         return "Estandar";

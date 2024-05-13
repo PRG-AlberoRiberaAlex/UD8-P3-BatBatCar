@@ -18,13 +18,11 @@ public class ViajeCancelable extends Viaje {
             Reserva reserva = iterator.next();
             // Verificar si el código de reserva coincide
             if (reserva.getCodiReserva().equals(codigoReserva)) {
-                // Eliminar la reserva del viaje
                 iterator.remove();
                 GestorIO.print("Reserva cancelada correctamente.");
                 return;
             }
         }
-        // Si no se encontró la reserva con el código dado
         GestorIO.print("No se encontró ninguna reserva con el código proporcionado.");
     }
 

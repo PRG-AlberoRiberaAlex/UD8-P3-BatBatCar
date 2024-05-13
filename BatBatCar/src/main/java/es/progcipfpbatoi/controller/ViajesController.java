@@ -78,7 +78,7 @@ public class ViajesController {
         }
 
         // Obtener la lista de viajes que el usuario puede cancelar
-        List<Viaje> viajesCancelables = viajesManager.buscarViajesCancelablePorUsuario(usuarioActivo);
+        List<Viaje> viajesCancelables = viajesManager.buscarViajesReservables(usuarioActivo);
 
         // Mostrar los viajes cancelables
        GestorIO.print("Listado de viajes cancelables:");
@@ -166,21 +166,21 @@ public class ViajesController {
             return;
         }
 
-        //Obtener la lista de viajes reservables para el usuario activo
-        List<Viaje> viajesReservables = viajesManager.buscarViajesCancelablePorUsuario(usuarioActivo);
+        // Obtener todos los viajes disponibles para el usuario activo
+        List<Viaje> viajesDisponibles = viajesManager.buscarViajesReservables(usuarioActivo);
 
-        // Mostrar los viajes reservables al usuario
-        GestorIO.print("Listado de viajes reservables:");
-        for (Viaje viaje : viajesReservables) {
+        // Mostrar los viajes disponibles al usuario
+        GestorIO.print("Listado de viajes disponibles:");
+        for (Viaje viaje : viajesDisponibles) {
             GestorIO.print(viaje.getCodigoDeViaje() + " - " + viaje.getRuta());
         }
 
-        //Solicitar al usuario que seleccione un viaje
+        // Solicitar al usuario que seleccione un viaje
         int codigoViajeSeleccionado = GestorIO.getInt("Introduce el código del viaje que deseas reservar:");
 
         // Encontrar el viaje seleccionado por el usuario
         Viaje viajeSeleccionado = null;
-        for (Viaje viaje : viajesReservables) {
+        for (Viaje viaje : viajesDisponibles) {
             if (viaje.getCodigoDeViaje() == codigoViajeSeleccionado) {
                 viajeSeleccionado = viaje;
                 break;
@@ -193,10 +193,16 @@ public class ViajesController {
             return;
         }
 
+        // Verificar si el viaje es exclusivo y si ya se ha realizado una reserva en él
+        if (viajeSeleccionado instanceof ViajeExclusivo && ((ViajeExclusivo) viajeSeleccionado).getreservaRealizada()) {
+            GestorIO.print("Error: Ya se ha realizado una reserva en este viaje exclusivo.");
+            return;
+        }
+
         // Pedir los datos necesarios para realizar la reserva
         int numeroPlazas = GestorIO.getInt("Introduce el número de plazas que deseas reservar:");
 
-        //  Realizar la reserva
+        // Realizar la reserva
         Reserva reserva = new Reserva(usuarioActivo, numeroPlazas);
         viajeSeleccionado.añadirReserva(reserva);
 
@@ -206,6 +212,7 @@ public class ViajesController {
         GestorIO.print("Número de plazas reservadas: " + numeroPlazas);
         GestorIO.print("Datos del usuario: " + usuarioActivo.toString());
     }
+
 
 
 

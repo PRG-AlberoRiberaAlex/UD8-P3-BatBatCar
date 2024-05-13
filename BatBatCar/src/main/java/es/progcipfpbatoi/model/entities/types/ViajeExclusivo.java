@@ -29,4 +29,8 @@ public class ViajeExclusivo extends Viaje {
     public String tipodeavion() {
         return "Exclusivo";
     }
+
+    public boolean getreservaRealizada() {
+        return reservaRealizada;
+    }
 }
