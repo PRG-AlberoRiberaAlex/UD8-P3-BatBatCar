@@ -1,13 +1,9 @@
 package es.progcipfpbatoi.model.entities;
 
 import es.progcipfpbatoi.model.entities.types.Reserva;
-import es.progcipfpbatoi.model.entities.types.Viaje;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
-
 /**
  *
  * Clase que representa a un usuario de la aplicación
@@ -27,19 +23,6 @@ public class Usuario {
         reservas.add(reserva);
     }
 
-    public boolean haRealizadoReservaParaViaje(Viaje viaje) {
-        for (Reserva reserva : reservas) {
-            if (reserva.getCodiReserva().equals(viaje)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    public void eliminarReserva(Reserva reserva) {
-        reservas.remove(reserva);
-    }
-
-
     public String getNomUsuario() {
         return nomUsuario;
     }
@@ -55,4 +38,5 @@ public class Usuario {
     public List<Reserva> getReservas() {
         return reservas;
     }
+
 }
