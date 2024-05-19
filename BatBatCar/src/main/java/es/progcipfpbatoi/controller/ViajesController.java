@@ -1,6 +1,5 @@
 package es.progcipfpbatoi.controller;
 
-
 import es.progcipfpbatoi.Excepciones.CredencialesInvalidasExcepcion;
 import es.progcipfpbatoi.Excepciones.MaximoIntentosAlcanzadosExcepcion;
 import es.progcipfpbatoi.Excepciones.UsuarioSinEstablecerException;
@@ -63,7 +62,7 @@ public class ViajesController {
     private void iniciarSesion(Usuario usuario) throws CredencialesInvalidasExcepcion, MaximoIntentosAlcanzadosExcepcion {
         int intentosRestantes = MAX_INTENTOS;
 
-        do {
+        while (intentosRestantes > 0) {
             String contraseña = GestorIO.getString("Introduce la contraseña:");
 
             if (contraseña.equals(usuario.getContraseña())) {
@@ -73,15 +72,15 @@ public class ViajesController {
             } else {
                 intentosRestantes--;
                 if (intentosRestantes > 0) {
-                    throw new CredencialesInvalidasExcepcion("Contraseña incorrecta. Intentos restantes: " + intentosRestantes);
+                    GestorIO.print("Contraseña incorrecta. Intentos restantes: " + intentosRestantes);
+                } else {
+                    throw new MaximoIntentosAlcanzadosExcepcion("Se han agotado los intentos. Saliendo del programa...");
                 }
             }
-        } while (intentosRestantes > 0);
-
-        throw new MaximoIntentosAlcanzadosExcepcion("Se han agotado los intentos. Saliendo del programa...");
+        }
     }
-    /*Añade un viaje al sistema,preguntando previamente por toda la información necesaria para crearlo.*/
 
+    /*Añade un viaje al sistema,preguntando previamente por toda la información necesaria para crearlo.*/
     public void añadirViaje() {
         mostrarOpcionesViajes();
         Usuario usuario = getUsuario();
@@ -329,7 +328,10 @@ public class ViajesController {
             }
 
             // Actualizar plazas reservadas del viaje
-            viaje.setPlazas_reservadas(viaje.getPlazas_reservadas() - reservaSeleccionada.getNumero_plazas());
+            viaje.setPlazas_reservadas(viaje.getPlazas_reservadas() - reservaSeleccionada.getNumero_plazas() + nuevasPlazas);
+            reservaSeleccionada.setNumero_plazas(nuevasPlazas);
+            GestorIO.print("Reserva modificada correctamente.");
+
             List<Reserva> reservasUsuario = usuarioActivo.getReservas();
             ListadoReservasView listadoReservasView = new ListadoReservasView(reservasUsuario);
             listadoReservasView.visualizar();
@@ -337,7 +339,6 @@ public class ViajesController {
             GestorIO.print(e.getMessage());
         }
     }
-
 
     private void verificarUsuarioActivo() throws UsuarioSinEstablecerException {
         if (usuarioActivo == null) {

@@ -69,7 +69,7 @@ public class Menu {
             case 7 -> viajesController.cancelarReserva();
             case 8 -> viajesController.modificarReserva();
             case 9 -> GestorIO.print("Saliendo del programa...");
-            default -> GestorIO.getInt("");
+            default -> GestorIO.getInt("Opcion incorrecta");
         }
     }
 
