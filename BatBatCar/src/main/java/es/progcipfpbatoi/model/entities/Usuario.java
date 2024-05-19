@@ -35,6 +35,9 @@ public class Usuario {
         }
         return false;
     }
+    public void eliminarReserva(Reserva reserva) {
+        reservas.remove(reserva);
+    }
 
 
     public String getNomUsuario() {
@@ -48,5 +51,8 @@ public class Usuario {
     @Override
     public String toString() {
         return getNomUsuario();
+    }
+    public List<Reserva> getReservas() {
+        return reservas;
     }
 }

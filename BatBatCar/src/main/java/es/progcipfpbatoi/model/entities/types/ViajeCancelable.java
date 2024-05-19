@@ -3,7 +3,6 @@ package es.progcipfpbatoi.model.entities.types;
 import es.progcipfpbatoi.model.entities.Usuario;
 import es.progcipfpbatoi.views.GestorIO;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ViajeCancelable extends Viaje {

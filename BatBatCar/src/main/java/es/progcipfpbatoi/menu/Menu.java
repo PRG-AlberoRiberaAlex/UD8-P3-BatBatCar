@@ -65,16 +65,12 @@ public class Menu {
             case 3 -> viajesController.añadirViaje();
             case 4 -> viajesController.cancelarViaje();
             case 5 -> viajesController.realizarReserva();
-            case 8 ->GestorIO.getInt("a");
+            case 6 -> viajesController.modificarReserva();
+            case 7 -> viajesController.cancelarReserva();
+            case 8 -> viajesController.modificarReserva();
             case 9 -> GestorIO.print("Saliendo del programa...");
             default -> GestorIO.getInt("");
         }
-    }
-    private void mostrarOpcionesViajes() {
-        GestorIO.print("1.Viaje Estándar");
-        GestorIO.print("2.Viaje Cancelable");
-        GestorIO.print("3.Viaje Exclusivo");
-        GestorIO.print("4.Viaje Flexible");
     }
 
 }

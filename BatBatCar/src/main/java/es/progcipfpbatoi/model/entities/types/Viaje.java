@@ -37,16 +37,18 @@ public class Viaje {
         return Precio * Plazas_reservadas;
     }
 
-
-    // Metodo para añadir una reserva al viaje
+    // Método para añadir una reserva al viaje
     public void añadirReserva(Reserva reserva) {
         if (!Cerrado && !Cancelado && Plazas_reservadas < Plazas_reservables) {
             if (!Propietario.equals(reserva.getUsuario())) {
                 if (compararUsuario(this, reserva.getUsuario())) {
                     if (Plazas_reservadas + reserva.getNumero_plazas() <= Plazas_reservables) {
-                        reservas.add(reserva);
-                        Plazas_reservadas += reserva.getNumero_plazas();
-                        System.out.println("Reserva añadida correctamente.");
+                        // Validar la reserva utilizando el método validarReserva() de la clase Reserva
+                        if (reserva.validarReserva(this)) {
+                            reservas.add(reserva);
+                            Plazas_reservadas += reserva.getNumero_plazas();
+                            System.out.println("Reserva añadida correctamente.");
+                        }
                     } else {
                         System.out.println("No hay suficientes plazas disponibles.");
                     }
@@ -75,6 +77,9 @@ public class Viaje {
         Cancelado = true;
         System.out.println("Viaje cancelado correctamente.");
     }
+    public boolean contieneReserva(Reserva reserva) {
+        return reservas.contains(reserva);
+    }
 
     public int getCodigoDeViaje() {
         return CodigoDeViaje;
@@ -88,6 +93,11 @@ public class Viaje {
             }
         }
         return true;
+    }
+    public void eliminarReserva(Reserva reserva) {
+        reservas.remove(reserva);
+        Plazas_reservables -= reserva.getNumero_plazas();
+        System.out.println("Reserva eliminada correctamente.");
     }
 
 
@@ -154,6 +164,9 @@ public class Viaje {
 
     public int getPrecio() {
         return Precio;
+    }
+    public void setPlazas_reservadas(int nuevasPlazasReservadas) {
+        this.Plazas_reservadas = nuevasPlazasReservadas;
     }
 }
 

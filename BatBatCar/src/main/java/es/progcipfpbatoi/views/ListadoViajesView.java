@@ -46,7 +46,7 @@ public class ListadoViajesView {
     }
 
     public void visualizar() {
-        System.out.println(buildASCIITable().render(ANCHO_TABLA));
+        GestorIO.print(buildASCIITable().render(ANCHO_TABLA));
     }
 
     private void generarFilasViajes(AsciiTable tabla) {

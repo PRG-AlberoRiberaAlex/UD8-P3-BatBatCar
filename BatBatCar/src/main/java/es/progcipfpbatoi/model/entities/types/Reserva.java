@@ -7,6 +7,8 @@ public class Reserva {
     private String codigo;
     private Usuario usuario;
     protected int numero_plazas;
+    private Viaje viaje;
+
 
     public Reserva(Usuario usuario, int numeroPlazas) {
         this.usuario = usuario;
@@ -15,10 +17,11 @@ public class Reserva {
     }
 
     private String generarCodiReservaUnic() {
-        return "RES-" + (++contadorReservas); // Generación de código de reserva único
+        return "RES-" + (++contadorReservas);
     }
 
     public boolean validarReserva(Viaje viaje) {
+        this.viaje=viaje;
         // Condición a: El usuario no puede ser igual al propietario
         if (usuario.equals(viaje.getPropietario())) {
             System.out.println("Error: El usuario que hace la reserva es igual al propietario.");
@@ -26,7 +29,7 @@ public class Reserva {
         }
 
         // Condición b: El usuario no puede haber realizado ya una reserva en el viaje
-        if (!viaje.compararUsuario(viaje,usuario)) {
+        if (!viaje.compararUsuario(viaje, usuario)) {
             System.out.println("Error: El usuario ya ha realizado una reserva en este viaje.");
             return false;
         }
@@ -47,6 +50,7 @@ public class Reserva {
         return true;
     }
 
+
     public String getCodiReserva() {
         return codigo;
     }
@@ -57,5 +61,11 @@ public class Reserva {
 
     public int getNumero_plazas() {
         return numero_plazas;
+    }
+    public Viaje getViaje(){
+        return viaje;
+    }
+    public void setNumero_plazas(int numero_plazas) {
+        this.numero_plazas = numero_plazas;
     }
 }

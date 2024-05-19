@@ -1,6 +1,7 @@
 package es.progcipfpbatoi.model.managers;
 
 import es.progcipfpbatoi.model.entities.Usuario;
+import es.progcipfpbatoi.model.entities.types.Reserva;
 import es.progcipfpbatoi.model.entities.types.Viaje;
 import es.progcipfpbatoi.model.entities.types.ViajeExclusivo;
 
@@ -77,5 +78,23 @@ public class ViajesManager {
         return viajesReservables;
     }
 
+    public List<Viaje> buscarViajesReservablesPorUsuario(Usuario usuario) {
+        List<Viaje> viajesReservables = new ArrayList<>();
+        for (Viaje viaje : viajes) {
+            // Verificar si el viaje no está cancelado y  pertenece al usuario
+            if (!viaje.getCancelado() && viaje.getPropietario().equals(usuario)) {
+                viajesReservables.add(viaje);
+            }
+        }
+        return viajesReservables;
+    }
 
+    public Viaje obtenerViajePorReserva(Reserva reserva) {
+        for (Viaje viaje : viajes) {
+            if (viaje.contieneReserva(reserva)) {
+                return viaje;
+            }
+        }
+        return null;
+    }
 }
